@@ -28,8 +28,7 @@ var _errorHandler = _interopRequireDefault(require("./modules/core/errorHandler"
 
 var _routes = _interopRequireDefault(require("./modules/core/routes"));
 
-var _serveFavicon = _interopRequireDefault(require("serve-favicon"));
-
+// import favicon from 'serve-favicon';
 _mongoose["default"].connect(_keys["default"].mongoURI).then(function () {
   return console.log('MongoDB connected');
 })["catch"](function (err) {
@@ -38,9 +37,9 @@ _mongoose["default"].connect(_keys["default"].mongoURI).then(function () {
 
 var app = (0, _express["default"])();
 exports.app = app;
-app.set('port', process.env.PORT || 5000);
-app.use(_express["default"].json());
-app.use((0, _serveFavicon["default"])(_path["default"].join(__dirname, '../static/images/favicon.ico')));
+var PORT = process.env.PORT || 5000;
+app.use(_express["default"].json()); // app.use(favicon(path.join(__dirname, '../static/images/favicon.ico')));
+
 app.use('/static', _express["default"]["static"]((__dirname, 'static')));
 app.set('view engine', 'ejs');
 
@@ -52,6 +51,6 @@ app.use(_express["default"]["static"](clientPath));
 (0, _cors["default"])(app);
 (0, _routes["default"])(app);
 (0, _errorHandler["default"])(app);
-app.listen('port', function () {
-  console.log('Сервер запущен на порту: ' + app.get('port'));
+app.listen(PORT, function () {
+  console.log('Сервер запущен на порту: ' + PORT);
 });
