@@ -38,7 +38,7 @@ _mongoose["default"].connect(_keys["default"].mongoURI).then(function () {
 
 var app = (0, _express["default"])();
 exports.app = app;
-var port = process.env.port || 7000;
+var port = process.env.PORT || 7000;
 app.use(_express["default"].json());
 app.use((0, _serveFavicon["default"])(_path["default"].join(__dirname, '../static/images/favicon.ico')));
 app.use('/static', _express["default"]["static"]((__dirname, 'static')));
