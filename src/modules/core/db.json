@@ -1,0 +1,54 @@
+{
+  "posts": [
+    {
+      "id": 0,
+      "authorId": 4,
+      "text": "Текст по умолчанию"
+    },
+    {
+      "id": 1,
+      "authorId": 3,
+      "text": "Текст first"
+    },
+    {
+      "id": 2,
+      "authorId": 2
+    },
+    {
+      "id": 3,
+      "authorId": 3,
+      "text": "экскурсии"
+    },
+    {
+      "id": 4,
+      "authorId": 5,
+      "text": "Lorem ipsum sundark"
+    }
+  ],
+  "authors": [
+    {
+      "id": 2,
+      "name": "Uli"
+    },
+    {
+      "id": 3,
+      "name": "Елена"
+    },
+    {
+      "id": 4,
+      "name": "Gustav"
+    },
+    {
+      "id": 5,
+      "name": "Denis"
+    },
+    {
+      "id": 6,
+      "name": ""
+    },
+    {
+      "id": 7,
+      "name": "Яков Геннадьевич Мезин"
+    }
+  ]
+}
