@@ -4,6 +4,7 @@
   "description": "",
   "exports": "src/server.js",
   "scripts": {
+    "start": "node server.js",
     "build": "babel src/server.js -d lib",
     "dev": "nodemon --inspect --ignore 'db.json' --exec babel-node src/server.js",
     "babel-node": "babel-node --presets='@babel/preset-env'"
