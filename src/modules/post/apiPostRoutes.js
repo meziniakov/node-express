@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
   res.status(200).json(posts);
 });
 
-router.post('/', async (req, res) => {
+router.post('/', (req, res) => {
   // console.log(req.body.postText)
   // res.send(req.body.postText)
   const postData = {
@@ -17,12 +17,12 @@ router.post('/', async (req, res) => {
     postText: req.body.postText,
   };
   const post = new Post(postData);
-  await post.save();
+  post.save();
   res.redirect('/');
 });
 
-router.delete('/:id', async (req, res) => {
-  await Post.deleteOne({ _id: req.params.id });
+router.delete('/:id', (req, res) => {
+  Post.deleteOne({ _id: req.params.id });
   res.status(200).json({
     message: 'Deleted',
   });

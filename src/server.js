@@ -7,6 +7,7 @@ import parseResponce from './modules/core/parseResponce';
 import cors from './modules/core/cors';
 import errorHandler from './modules/core/errorHandler';
 import routes from './modules/core/routes';
+// import favicon from 'serve-favicon';
 
 mongoose
   .connect(keys.mongoURI)
@@ -14,8 +15,9 @@ mongoose
   .catch((err) => console.error(err));
 
 export const app = express();
-const port = process.env.port || 7000;
+const PORT = process.env.PORT || 5000;
 app.use(express.json());
+// app.use(favicon(path.join(__dirname, '../static/images/favicon.ico')));
 app.use('/static', express.static((__dirname, 'static')));
 app.set('view engine', 'ejs');
 
@@ -28,6 +30,6 @@ cors(app);
 routes(app);
 errorHandler(app);
 
-app.listen(port, () => {
-  console.log('Сервер запущен на порту: ' + port);
+app.listen(PORT, () => {
+  console.log('Сервер запущен на порту: ' + PORT);
 });
