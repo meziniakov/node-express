@@ -14,7 +14,7 @@ mongoose
   .catch((err) => console.error(err));
 
 export const app = express();
-const port = 7000;
+const port = process.env.port || 7000;
 app.use(express.json());
 app.use('/static', express.static((__dirname, 'static')));
 app.set('view engine', 'ejs');
