@@ -28,6 +28,8 @@ var _errorHandler = _interopRequireDefault(require("./modules/core/errorHandler"
 
 var _routes = _interopRequireDefault(require("./modules/core/routes"));
 
+var _serveFavicon = _interopRequireDefault(require("serve-favicon"));
+
 _mongoose["default"].connect(_keys["default"].mongoURI).then(function () {
   return console.log('MongoDB connected');
 })["catch"](function (err) {
@@ -38,6 +40,7 @@ var app = (0, _express["default"])();
 exports.app = app;
 var port = process.env.port || 7000;
 app.use(_express["default"].json());
+app.use((0, _serveFavicon["default"])(_path["default"].join(__dirname, '../static/images/favicon.ico')));
 app.use('/static', _express["default"]["static"]((__dirname, 'static')));
 app.set('view engine', 'ejs');
 
