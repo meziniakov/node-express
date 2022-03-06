@@ -1,0 +1,14 @@
+{
+  "folders": [
+    {
+      "path": ".."
+    },
+    {
+      "path": "../../vladilen_marathon"
+    }
+  ],
+  "settings": {
+    "git.ignoreLimitWarning": true,
+    "liveServer.settings.multiRootWorkspaceName": "vladilen_marathon"
+  }
+}
