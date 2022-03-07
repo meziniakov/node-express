@@ -31,7 +31,7 @@ export const AuthPage = () => {
   const register = async event => {
     event.preventDefault();
     await axios
-      .post('/user/register', {
+      .post('/api/user/register', {
         email: form.email,
         password: form.password,
       })
@@ -48,7 +48,7 @@ export const AuthPage = () => {
   const login = event => {
     event.preventDefault();
     axios
-      .post('/user/login', {
+      .post('/api/user/login', {
         email: form.email,
         password: form.password,
       })

@@ -15,8 +15,7 @@ const DomainTrack = props => (
         to={'/edit/' + props.domain._id}
         style={{ color: ' #a04949' }}
       ></Link>
-      <a
-        href="#"
+      <Link
         onClick={() => {
           props.deleteDomain(props.domain._id);
           // window.location.reload(false);
@@ -24,7 +23,7 @@ const DomainTrack = props => (
         style={{ color: ' #a04949' }}
       >
         Удалить
-      </a>
+      </Link>
     </td>
   </tr>
 );
