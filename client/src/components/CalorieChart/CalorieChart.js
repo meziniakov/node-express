@@ -21,7 +21,7 @@ const CalorieChart = () => {
     let foodCal = [];
     let caloriesCal = [];
     await axios
-      .get('http://localhost:5000/calorie/')
+      .get('/calorie/')
       .then(res => {
         console.log(res);
         for (let dataObj of res.data) {

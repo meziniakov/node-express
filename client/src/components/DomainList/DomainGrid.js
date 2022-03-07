@@ -107,7 +107,7 @@ const DomainGrid = () => {
 
   const getDomains = useCallback(() => {
     axios
-      .get('http://localhost:5000/project/' + id)
+      .get('/project/' + id)
       .then(res => {
         // console.log(res.data);
         setDomains(res.data);
@@ -134,7 +134,7 @@ const DomainGrid = () => {
   const handleSubmit = e => {
     e.preventDefault();
     axios
-      .post('http://localhost:5000/megaindex', domainsArray)
+      .post('/megaindex', domainsArray)
       .then(res => {
         console.log('handleSubmit', res.data);
         getDomains();

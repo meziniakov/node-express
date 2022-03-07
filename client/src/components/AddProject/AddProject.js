@@ -35,7 +35,7 @@ const AddProject = props => {
     };
 
     axios
-      .post('http://localhost:5000/project', projectData)
+      .post('/project', projectData)
       .then(res =>
         res.data.status === 'error'
           ? alert(res.data.message, 'error')

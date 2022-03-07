@@ -21,7 +21,7 @@ const UserChart = () => {
     let username = [];
     let calories = [];
     await axios
-      .get('http://localhost:5000/calorie/')
+      .get('/calorie/')
       .then(res => {
         console.log(res);
         for (const dataObj of res.data) {

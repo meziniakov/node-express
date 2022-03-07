@@ -27,7 +27,7 @@ const AddUser = () => {
     };
     console.log(user);
     axios
-      .post('http://localhost:5000/user/register', user)
+      .post('/user/register', user)
       .then(res => {
         res.data.status === 'error'
           ? handleClick(res.data.message, 'error')

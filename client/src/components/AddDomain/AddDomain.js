@@ -33,7 +33,7 @@ const AddDomain = () => {
       organic,
     };
     axios
-      .post('http://localhost:5000/domain', domainInfo)
+      .post('/domain', domainInfo)
       .then(res =>
         res.data.status === 'error'
           ? alert(res.data.message, 'error')
@@ -47,7 +47,7 @@ const AddDomain = () => {
 
   // useEffect(() => {
   //   axios
-  //     .get('http://localhost:5000/user/')
+  //     .get('/user/')
   //     .then(response => {
   //       if (response.data.length > 0) {
   //         console.log(response.data);

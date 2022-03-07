@@ -41,7 +41,7 @@ const DisplayFoodList = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:5000/calorie/')
+      .get('/calorie/')
       .then(response => {
         setFoods(response.data);
       })
@@ -51,7 +51,7 @@ const DisplayFoodList = () => {
   }, []);
 
   function deleteMeal(id) {
-    axios.delete('http://localhost:5000/calorie/' + id).then(response => {
+    axios.delete('/calorie/' + id).then(response => {
       console.log(response.data);
     });
     setFoods(foods.filter(el => el._id !== id));

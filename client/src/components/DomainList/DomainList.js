@@ -35,7 +35,7 @@ const DomainList = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:5000/domain/')
+      .get('/domain/')
       .then(response => {
         console.log(response.data);
         setDomains(response.data);
@@ -46,7 +46,7 @@ const DomainList = () => {
   }, [setDomains]);
 
   function deleteDomain(id) {
-    axios.delete('http://localhost:5000/domain/' + id).then(response => {
+    axios.delete('/domain/' + id).then(response => {
       console.log(response.data.message);
       message(response.data.message);
       setDomains(domains.filter(el => el._id !== id));

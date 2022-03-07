@@ -31,7 +31,7 @@ const BasicTable = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:5000/domain/')
+      .get('/domain/')
       .then(response => {
         // console.log(response.data);
         setDomains(response.data);
@@ -43,7 +43,7 @@ const BasicTable = () => {
 
   function handleDelete(id) {
     axios
-      .delete('http://localhost:5000/domain/' + id)
+      .delete('/domain/' + id)
       .then(res => {
         // console.log(res);
         message(res.data.message);

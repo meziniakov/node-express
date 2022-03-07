@@ -14,7 +14,7 @@ const AddFood = () => {
   useEffect(() => {
     let loading = false;
     axios
-      .get('http://localhost:5000/user/')
+      .get('/user/')
       .then(response => {
         if (response.data.length > 0) {
           console.log(response.data);
@@ -58,9 +58,7 @@ const AddFood = () => {
 
     console.log(meal);
 
-    axios
-      .post('http://localhost:5000/calorie/add', meal)
-      .then(res => console.log(res.data));
+    axios.post('/calorie/add', meal).then(res => console.log(res.data));
 
     window.location = '/';
   }
