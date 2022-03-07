@@ -3,6 +3,6 @@ import { getOrganicSearch } from './parser';
 
 const router = Router();
 
-router.get('/:keyword/:count', getOrganicSearch);
+router.get('/:projectId/:keyword/:count', getOrganicSearch);
 
 export default router;

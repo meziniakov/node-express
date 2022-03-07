@@ -50,6 +50,7 @@ const ProjectList = () => {
       })
       .catch(e => console.log(e));
   }
+
   return (
     <Container className="mt-4">
       <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -80,7 +81,7 @@ const ProjectList = () => {
                     }}
                   >
                     <TableCell component="th" scope="row">
-                      {project.title}
+                      <Link href={project._id}>{project.title}</Link>
                     </TableCell>
                     <TableCell align="right">{project.keyword}</TableCell>
                     <TableCell align="right">{project.count}</TableCell>

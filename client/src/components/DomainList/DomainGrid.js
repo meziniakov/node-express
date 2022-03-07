@@ -1,7 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import Box from '@mui/material/Box';
-import { DataGrid, GridToolbar, ruRU } from '@mui/x-data-grid';
+import { Box, Button } from '@mui/material';
+import {
+  DataGrid,
+  GridToolbar,
+  StyledGridOverlay,
+  GridToolbarContainer,
+  GridToolbarColumnsButton,
+  GridToolbarFilterButton,
+  GridToolbarDensitySelector,
+  GridToolbarExport,
+  ruRU,
+} from '@mui/x-data-grid';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const currencyFormatter = new Intl.NumberFormat('ru-RU', {
   style: 'currency',
@@ -89,23 +100,24 @@ const columns = [
   // },
 ];
 
-export default function DomainGrid(props) {
+const DomainGrid = () => {
+  const { id } = useParams();
   const [domains, setDomains] = useState([]);
   const [domainsArray, setDomainsArray] = useState([]);
 
   const getDomains = useCallback(() => {
     axios
-      .get('http://localhost:5000/project/' + props.match.params.id)
+      .get('http://localhost:5000/project/' + id)
       .then(res => {
         // console.log(res.data);
         setDomains(res.data);
       })
       .catch(e => console.log(e));
-  }, [props.match.params.id]);
+  }, [id]);
 
   useEffect(() => {
     getDomains();
-  }, [getDomains, props.match.params.id]);
+  }, [getDomains, id]);
 
   const nahdleSelectRow = rows => {
     const dom = domains.map(el => {
@@ -130,6 +142,20 @@ export default function DomainGrid(props) {
       .catch(e => console.log(e));
   };
 
+  function CustomToolbar() {
+    return (
+      <GridToolbarContainer>
+        <GridToolbarColumnsButton />
+        <GridToolbarFilterButton />
+        <GridToolbarDensitySelector />
+        <GridToolbarExport />
+        <Button>Спарсить</Button>
+        <Button>В черный список</Button>
+        <Button>Удалить</Button>
+      </GridToolbarContainer>
+    );
+  }
+
   return (
     <Box
       sx={{
@@ -145,7 +171,7 @@ export default function DomainGrid(props) {
     >
       <DataGrid
         components={{
-          Toolbar: GridToolbar,
+          Toolbar: CustomToolbar,
         }}
         loading={domains.length === 0}
         localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
@@ -166,4 +192,6 @@ export default function DomainGrid(props) {
       </button>
     </Box>
   );
-}
+};
+
+export default DomainGrid;

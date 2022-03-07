@@ -13,6 +13,7 @@ const AXIOS_OPTIONS = {
 };
 
 export async function getOrganicSearch(req, res) {
+  const projectId = req.params.projectId;
   const keyword = encodeURI(req.params.keyword);
   const count = req.params.count;
   const result = [];
@@ -46,6 +47,7 @@ export async function getOrganicSearch(req, res) {
             link: links[i],
             title: titles[i],
             description: snippets[i],
+            projects: [projectId],
           };
         }
         console.log(result);
@@ -64,7 +66,7 @@ export async function getOrganicSearch(req, res) {
       }
     } catch (e) {
       console.log(e);
-      res.status(400).json({ message: 'Ошибка добавления' });
+      return res.status(400).json({ message: 'Ошибка добавления' });
     }
   }
 }

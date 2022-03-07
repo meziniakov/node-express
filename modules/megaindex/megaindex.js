@@ -4,7 +4,7 @@ const Domain = require('../../models/Domain');
 const chromeOptions = {
   // executablePath:
   //   '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-  headless: false,
+  headless: true,
   slowMo: 10,
   defaultViewport: null,
   args: [
@@ -87,18 +87,6 @@ async function parseMegaindex(browser, _id, domain) {
   return promise;
 }
 
-export async function getData(req, res) {
-  const idAndDomain = req.body;
-  console.log(idAndDomain);
-  // res.json({ domains });
-  // domains = await Domain.find({ _id: { $in: ids } });
-  // const urls = domains.map(row => row.domain);
-
-  let browser = await startBrowser();
-  let result = await scrapeAll(browser, idAndDomain);
-  res.status(201).json({ status: 'success', result: result });
-}
-
 async function scrapeAll(browser, idAndDomain) {
   const promise = new Promise(async (resolve, reject) => {
     try {
@@ -120,4 +108,16 @@ async function scrapeAll(browser, idAndDomain) {
     }
   });
   return promise;
+}
+
+export async function getData(req, res) {
+  const idAndDomain = req.body;
+  console.log(idAndDomain);
+  // res.json({ domains });
+  // domains = await Domain.find({ _id: { $in: ids } });
+  // const urls = domains.map(row => row.domain);
+
+  let browser = await startBrowser();
+  let result = await scrapeAll(browser, idAndDomain);
+  res.status(201).json({ status: 'success', result: result });
 }
