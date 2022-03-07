@@ -21,7 +21,6 @@ logger(app);
 parseResponce(app);
 cors(app);
 routes(app);
-errorHandler(app);
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/', express.static(path.join(__dirname, 'client', 'build')));
@@ -29,6 +28,7 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
+errorHandler(app);
 
 app.listen(PORT, () => {
   console.log('Сервер запущен на порту: ' + PORT);
