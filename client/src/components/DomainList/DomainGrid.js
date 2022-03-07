@@ -2,8 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Box, Button } from '@mui/material';
 import {
   DataGrid,
-  GridToolbar,
-  StyledGridOverlay,
   GridToolbarContainer,
   GridToolbarColumnsButton,
   GridToolbarFilterButton,
@@ -107,7 +105,7 @@ const DomainGrid = () => {
 
   const getDomains = useCallback(() => {
     axios
-      .get('/project/' + id)
+      .get('/api/project/' + id)
       .then(res => {
         // console.log(res.data);
         setDomains(res.data);
@@ -134,7 +132,7 @@ const DomainGrid = () => {
   const handleSubmit = e => {
     e.preventDefault();
     axios
-      .post('/megaindex', domainsArray)
+      .post('/api/megaindex', domainsArray)
       .then(res => {
         console.log('handleSubmit', res.data);
         getDomains();

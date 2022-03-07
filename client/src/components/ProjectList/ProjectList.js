@@ -31,7 +31,7 @@ const ProjectList = () => {
 
   useEffect(() => {
     axios
-      .get('/project/')
+      .get('/api/project/')
       .then(response => {
         setProjects(response.data);
         // console.log(response);
@@ -43,7 +43,7 @@ const ProjectList = () => {
 
   function handleDelete(id) {
     axios
-      .delete('/project/' + id)
+      .delete('/api/project/' + id)
       .then(res => {
         alert(res.data.message);
         setProjects(projects.filter(el => el._id !== id));

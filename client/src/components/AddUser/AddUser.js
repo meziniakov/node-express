@@ -27,7 +27,7 @@ const AddUser = () => {
     };
     console.log(user);
     axios
-      .post('/user/register', user)
+      .post('/api/user/register', user)
       .then(res => {
         res.data.status === 'error'
           ? handleClick(res.data.message, 'error')

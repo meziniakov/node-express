@@ -1,6 +1,6 @@
 import postRouter from '../post/Routes';
 import authorRouter from '../author/Routes';
-import apiPostRouter from '../post/apiPostRoutes';
+// import apiPostRouter from '../post/apiPostRoutes';
 import userRouter from '../user/Routes';
 import domainRouter from '../domains/Routes';
 import projectRouter from '../project/Routes';
@@ -10,15 +10,15 @@ import megaindexRouter from '../megaindex/Routes';
 // import { home } from '../../home';
 
 export default function routes(app) {
-  app.use('/calorie', calorieRouter);
-  app.use('/parser/', parserRouter);
-  app.use('/megaindex/', megaindexRouter);
-  app.use('/user', userRouter);
-  app.use('/domain', domainRouter);
-  app.use('/project', projectRouter);
-  app.use('/post', postRouter);
-  app.use('/api/post', apiPostRouter);
-  app.use('/author', authorRouter);
+  app.use('/api/calorie', calorieRouter);
+  app.use('/api/parser/', parserRouter);
+  app.use('/api/megaindex/', megaindexRouter);
+  app.use('/api/user', userRouter);
+  app.use('/api/domain', domainRouter);
+  app.use('/api/project', projectRouter);
+  app.use('/api/post', postRouter);
+  // app.use('/api/post', apiPostRouter);
+  app.use('/api/author', authorRouter);
   // app.use('/', home);
   //   app.get('/excel', (req, res) => {
   //   // let filename = "./xlsx/test2.xlsx";

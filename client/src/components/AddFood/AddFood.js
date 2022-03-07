@@ -14,7 +14,7 @@ const AddFood = () => {
   useEffect(() => {
     let loading = false;
     axios
-      .get('/user/')
+      .get('/api/user/')
       .then(response => {
         if (response.data.length > 0) {
           console.log(response.data);
@@ -58,7 +58,7 @@ const AddFood = () => {
 
     console.log(meal);
 
-    axios.post('/calorie/add', meal).then(res => console.log(res.data));
+    axios.post('/api/calorie/add', meal).then(res => console.log(res.data));
 
     window.location = '/';
   }

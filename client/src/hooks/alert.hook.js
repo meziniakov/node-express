@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
-import { useSnackbar, closeSnackbar } from 'notistack';
+import { useSnackbar } from 'notistack';
 
 const useAlert = () => {
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
 
   return useCallback((message, type) => {
     enqueueSnackbar(message, { variant: type });

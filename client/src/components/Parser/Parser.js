@@ -34,7 +34,7 @@ export default function Parser() {
     };
 
     axios
-      .post('/project', projectData)
+      .post('/api/project', projectData)
       .then(res =>
         res.data.status === 'error'
           ? alert(res.data.message, 'error')

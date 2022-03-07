@@ -17,18 +17,18 @@ const app = express();
 const PORT = config.get('port') || 5000;
 app.use(express.json({ extended: true }));
 
+logger(app);
+parseResponce(app);
+cors(app);
+routes(app);
+errorHandler(app);
+
 if (process.env.NODE_ENV === 'production') {
   app.use('/', express.static(path.join(__dirname, 'client', 'build')));
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
-
-logger(app);
-parseResponce(app);
-cors(app);
-routes(app);
-errorHandler(app);
 
 app.listen(PORT, () => {
   console.log('Сервер запущен на порту: ' + PORT);

@@ -31,7 +31,7 @@ const UserList = () => {
 
   useEffect(() => {
     axios
-      .get('/user')
+      .get('/api/user')
       .then(response => {
         console.log(response.data);
         setUsers(response.data);
@@ -41,7 +41,7 @@ const UserList = () => {
 
   function handleDelete(id) {
     axios
-      .delete('/user/' + id)
+      .delete('/api/user/' + id)
       .then(res => {
         console.log(res);
         alert(res.data.message);
