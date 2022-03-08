@@ -118,6 +118,7 @@ export async function getData(req, res) {
   // const urls = domains.map(row => row.domain);
 
   let browser = await startBrowser();
+  console.log(browser);
   let result = await scrapeAll(browser, idAndDomain);
   res.status(201).json({ status: 'success', result: result });
 }

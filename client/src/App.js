@@ -5,8 +5,13 @@ import { AuthContext } from './context/AuthContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './components/Navbar';
 import { useRoutes } from './routes';
+import axios from 'axios';
 
 function App() {
+  if (process.env.NODE_ENV === 'development') {
+    axios.defaults.baseURL = 'http://localhost:5000';
+  }
+
   const { login, logout, token, userId } = useAuth();
   const isAuthenticated = !!token;
 

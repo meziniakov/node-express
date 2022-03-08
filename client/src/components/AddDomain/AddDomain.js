@@ -33,7 +33,7 @@ const AddDomain = () => {
       organic,
     };
     axios
-      .post('/domain', domainInfo)
+      .post('/api/domain', domainInfo)
       .then(res =>
         res.data.status === 'error'
           ? alert(res.data.message, 'error')
