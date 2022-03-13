@@ -11,6 +11,7 @@ import {
 } from '@mui/x-data-grid';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import useAlert from '../../hooks/alert.hook';
 
 const currencyFormatter = new Intl.NumberFormat('ru-RU', {
   style: 'currency',
@@ -102,12 +103,16 @@ const DomainGrid = () => {
   const { id } = useParams();
   const [domains, setDomains] = useState([]);
   const [domainsArray, setDomainsArray] = useState([]);
+  const alert = useAlert(null);
 
   const getDomains = useCallback(() => {
     axios
       .get('/api/project/' + id)
       .then(res => {
         // console.log(res.data);
+        // alert
+        //   ? alert(res.data, 'error')
+        //   : alert(res.data.countUpdate, 'success');
         setDomains(res.data);
       })
       .catch(e => console.log(e));

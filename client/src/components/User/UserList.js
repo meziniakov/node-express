@@ -43,7 +43,6 @@ const UserList = () => {
     axios
       .delete('/api/user/' + id)
       .then(res => {
-        console.log(res);
         alert(res.data.message);
         setUsers(users.filter(el => el._id !== id));
       })
@@ -63,7 +62,6 @@ const UserList = () => {
             <TableHead>
               <TableRow>
                 <TableCell>👤 Email</TableCell>
-                <TableCell align="right">📅 Date</TableCell>
                 <TableCell align="right">Edit/Delete</TableCell>
               </TableRow>
             </TableHead>
@@ -77,9 +75,6 @@ const UserList = () => {
                   >
                     <TableCell component="th" scope="row">
                       {user.email}
-                    </TableCell>
-                    <TableCell align="right">
-                      {user.date.substring(0, 10)}
                     </TableCell>
                     <TableCell align="right">
                       <Link

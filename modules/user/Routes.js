@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { userGetAll, userRegister, userLogin } from './user';
+import { userGetAll, userRegister, userLogin, deleteUserById } from './user';
 import { check } from 'express-validator';
 const router = Router();
 
@@ -24,5 +24,6 @@ router.post(
   userLogin
 );
 router.get('/', userGetAll);
+router.delete('/:id', deleteUserById);
 
 export default router;

@@ -8,13 +8,11 @@ export async function userRegister(req, res) {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res
-        .status(200)
-        .json({
-          errors: errors.array(),
-          status: 'error',
-          message: 'Некорректные данные',
-        });
+      return res.status(200).json({
+        errors: errors.array(),
+        status: 'error',
+        message: 'Некорректные данные',
+      });
     }
 
     const { email, password } = req.body;
@@ -96,4 +94,13 @@ export function userGetAll(req, res) {
       console.log(err);
       res.status(400).json('Error responce all users');
     });
+}
+export async function deleteUserById(req, res) {
+  try {
+    await User.deleteOne({ _id: req.params.id });
+    res.status(200).json({ status: 'success', message: 'Успешно удалено' });
+  } catch (e) {
+    console.log(e);
+    res.status(400).json({ status: 'error', message: 'Ошибка при удалении' });
+  }
 }

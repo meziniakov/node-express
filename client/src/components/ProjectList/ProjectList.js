@@ -62,8 +62,8 @@ const ProjectList = () => {
     axios
       .post('/api/parser', postData)
       .then(res =>
-        res.data.status === 'error'
-          ? alert(res.data.message, 'error')
+        res.data.countInsert
+          ? alert(res.data.countInsert, 'success')
           : alert(res.data.message, 'success')
       )
       .catch(e => alert(e.message, 'error'));

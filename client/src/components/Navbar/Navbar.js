@@ -25,10 +25,6 @@ const pages = [
     url: '/project/add',
   },
   {
-    name: 'Домены',
-    url: '/domain/all',
-  },
-  {
     name: 'Добавить домен',
     url: '/domain/add',
   },
@@ -41,7 +37,7 @@ const pages = [
     url: '/user/add',
   },
 ];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Выйти'];
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
