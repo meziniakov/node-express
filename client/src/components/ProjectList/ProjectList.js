@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import useAlert from '../../hooks/alert.hook';
+import axios from 'axios';
 import {
   Table,
   TablePagination,
@@ -51,6 +51,24 @@ const ProjectList = () => {
       .catch(e => console.log(e));
   }
 
+  function handleParser(e, project) {
+    e.preventDefault();
+    const postData = {
+      projectId: project._id,
+      keywords: project.keywords,
+      count: project.count,
+    };
+    console.log(postData);
+    axios
+      .post('/api/parser', postData)
+      .then(res =>
+        res.data.status === 'error'
+          ? alert(res.data.message, 'error')
+          : alert(res.data.message, 'success')
+      )
+      .catch(e => alert(e.message, 'error'));
+  }
+
   return (
     <Container className="mt-4">
       <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -63,9 +81,10 @@ const ProjectList = () => {
           >
             <TableHead>
               <TableRow>
-                <TableCell>👤 Title</TableCell>
-                <TableCell align="right">🔥 Keyword</TableCell>
-                <TableCell align="right">🔥 Count</TableCell>
+                <TableCell>👤 Тематика сайтов</TableCell>
+                <TableCell align="right">🔥 Ключевые слова</TableCell>
+                <TableCell align="right">🔥 Доход на посетителя</TableCell>
+                <TableCell align="right">🔥 Страниц выдачи</TableCell>
                 <TableCell align="right">📅 Date</TableCell>
                 <TableCell align="right">Edit/Delete</TableCell>
               </TableRow>
@@ -83,12 +102,25 @@ const ProjectList = () => {
                     <TableCell component="th" scope="row">
                       <Link href={project._id}>{project.title}</Link>
                     </TableCell>
-                    <TableCell align="right">{project.keyword}</TableCell>
+                    <TableCell align="right">
+                      {project.keywords.join('\n')}
+                    </TableCell>
+                    <TableCell align="right">
+                      {project.profitPerVisitor}
+                    </TableCell>
                     <TableCell align="right">{project.count}</TableCell>
                     <TableCell align="right">
                       {project.date.substring(0, 10)}
                     </TableCell>
                     <TableCell align="right">
+                      <Link
+                        href={'/project/' + project._id}
+                        onClick={e => {
+                          handleParser(e, project);
+                        }}
+                      >
+                        Парсинг
+                      </Link>
                       <Link
                         href="#"
                         onClick={() => {

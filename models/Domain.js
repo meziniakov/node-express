@@ -16,7 +16,8 @@ const DomainSchema = new Schema({
   description: {
     type: String,
   },
-  date: { type: Date, default: Date.now },
+  dateCreate: { type: Date, default: Date.now },
+  dateUpdate: { type: Date },
   projects: [{ type: Types.ObjectId, ref: 'Project' }],
   traffic: Number,
   organic: Number,

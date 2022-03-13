@@ -13,60 +13,116 @@ const AXIOS_OPTIONS = {
 };
 
 export async function getOrganicSearch(req, res) {
-  const projectId = req.params.projectId;
-  const keyword = encodeURI(req.params.keyword);
-  const count = req.params.count;
-  const result = [];
+  //распарсиваем post запрос
+  const { projectId, count } = req.body;
+  const encodeKeywords = encodeURI(req.body.keywords);
+  const keywords = encodeKeywords.split(',');
+  let { countUpdate, countInsert } = '';
 
-  for (let start = 0; start < count * 10; start = start + 10) {
-    await axios
-      .get(
-        `https://www.google.com/search?q=${keyword}&start=${start}&hl=en&gl=us`,
-        AXIOS_OPTIONS
-      )
-      .then(({ data }) => {
-        let $ = cheerio.load(data);
-        const links = [];
-        const titles = [];
-        const snippets = [];
+  // keywords.forEach(async keyword => {
+  const scrapeData = [];
+  for (let k = 0; k < keywords.length; k++) {
+    for (let start = 0; start < count * 10; start = start + 10) {
+      await axios
+        .get(
+          `https://www.google.com/search?q=${keywords[k]}&start=${start}&hl=en&gl=us`,
+          AXIOS_OPTIONS
+        )
+        .then(({ data }) => {
+          let $ = cheerio.load(data);
+          const links = [];
+          const titles = [];
+          const snippets = [];
 
-        $('.yuRUbf > a').each((i, el) => {
-          links[i] = $(el).attr('href');
-        });
-        $('.yuRUbf > a > h3').each((i, el) => {
-          titles[i] = $(el).text();
-        });
-        $('.VwiC3b').each((i, el) => {
-          snippets[i] = $(el).text().trim();
-        });
+          $('.yuRUbf > a').each((i, el) => {
+            links[i] = $(el).attr('href');
+          });
+          $('.yuRUbf > a > h3').each((i, el) => {
+            titles[i] = $(el).text();
+          });
+          $('.VwiC3b').each((i, el) => {
+            snippets[i] = $(el).text().trim();
+          });
 
-        for (let i = 0; i < links.length; i++) {
-          const url = new URL(links[i]);
-          result[i] = {
-            domain: url.protocol + '//' + url.host,
-            link: links[i],
-            title: titles[i],
-            description: snippets[i],
-            projects: [projectId],
-          };
-        }
-        console.log(result);
-        addDomain(result);
-        res.status(200).json(result);
-      })
-      .catch(e => console.log(e));
+          let result = {};
+          for (let i = 0; i < links.length; i++) {
+            const url = new URL(links[i]);
+            result = {
+              domain: url.protocol + '//' + url.host,
+              link: links[i],
+              title: titles[i],
+              description: snippets[i],
+              projects: [projectId],
+            };
+            scrapeData.push(result);
+          }
+        })
+        .catch(e => console.log('Error', e));
+    }
   }
+  await addDomain(scrapeData);
 
-  async function addDomain(newDomain) {
+  res.status(200).json({ countInsert: countInsert, countUpdate: countUpdate });
+
+  async function addDomain(scrapeData) {
     try {
-      for (let i = 0; i < newDomain.length; i++) {
-        const domain = await new Domain(newDomain[i]);
-        if (await domain.save())
-          console.log(`Домен ${domain.domain} успешно добавлен`);
+      //фильтруем
+      const allDomain = scrapeData.map(el => el.domain);
+      const existingRecords = await Domain.find({ domain: { $in: allDomain } });
+      const existingDomains = existingRecords.map(el => el.domain);
+      const missingItems = scrapeData.filter(
+        item => !existingDomains.includes(item.domain)
+      );
+      const presentItems = scrapeData.filter(item =>
+        existingDomains.includes(item.domain)
+      );
+      console.log('missingItems', missingItems);
+
+      //insert to db
+      if (missingItems.length > 0) {
+        await Domain.insertMany(missingItems)
+          .then(res => (countInsert = res.length - 1))
+          .catch(e => console.log('Ошибка вставки новых записей', e));
       }
+
+      //update to db
+      if (presentItems.length > 0) {
+        await Domain.updateMany(
+          { domain: { $in: presentItems.map(item => item.domain) } },
+          { $push: { projects: projectId } }
+        )
+          .then(res => (countUpdate = res.modifiedCount))
+          .catch(e => console.log('Ошибка обновления записей', e));
+      }
+
+      // Проверяем существуют ли домены в базе
+      // let domainExist = await Domain.findOne({ domain: newDomain.domain });
+      // // Если существует то добавим projectId и сохраним
+      // if (domainExist) {
+      //   const domainUpdate = await Domain.updateOne(
+      //     {
+      //       domain: domainExist.domain,
+      //     },
+      //     {
+      //       $addToSet: {
+      //         projects: domainExist.projectId,
+      //       },
+      //     }
+      //   );
+      //   domainUpdate.save(err => {
+      //     if (err) throw err;
+      //     console.log(`Домен ${domainUpdate.domain} успешно обновлен`);
+      //   });
+      //   // иначе создаем новый домен
+      // } else {
+      //   const domain = await new Domain(newDomain);
+      //   await domain.save(err => {
+      //     if (err) throw err;
+      //     console.log(`Домен ${domain.domain} успешно добавлен`);
+      //   });
+      // }
     } catch (e) {
-      console.log(e);
-      return res.status(400).json({ message: 'Ошибка добавления' });
+      console.log('Ошибка добавления или обновления:', e);
     }
   }
 }

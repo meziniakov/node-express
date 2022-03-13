@@ -8,6 +8,7 @@ const chromeOptions = {
   slowMo: 10,
   defaultViewport: null,
   args: [
+    '--no-sandbox',
     '--disable-setuid-sandbox',
     '--window-size=1920,1080',
     // '--proxy-server=https://64.235.204.107:3128'
