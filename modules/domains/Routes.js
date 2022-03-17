@@ -6,6 +6,7 @@ import {
   domainById,
   allDomainsByIds,
   updateDomain,
+  domainToBlacklist,
 } from './domain';
 
 const router = Router();
@@ -15,6 +16,7 @@ router.get('/all', allDomainsByIds);
 router.get('/:id', domainById);
 router.delete('/:id', deleteDomain);
 router.put('/:id', updateDomain);
+router.post('/blacklist', domainToBlacklist);
 router.post('/', addDomain);
 
 export default router;

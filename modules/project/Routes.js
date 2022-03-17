@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import {
   allProjects,
-  projectById,
+  getDomainsByProjectId,
   addProject,
   deleteProjectById,
 } from './project';
@@ -9,7 +9,7 @@ import {
 const router = Router();
 
 router.get('/', allProjects);
-router.get('/:id', projectById);
+router.get('/:id', getDomainsByProjectId);
 router.post('/', addProject);
 router.delete('/:id', deleteProjectById);
 

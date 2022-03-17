@@ -89,7 +89,7 @@ export async function getOrganicSearch(req, res) {
       if (presentItems.length > 0) {
         await Domain.updateMany(
           { domain: { $in: presentItems.map(item => item.domain) } },
-          { $push: { projects: projectId } }
+          { $addToSet: { projects: projectId } }
         )
           .then(res => (countUpdate = res.modifiedCount))
           .catch(e => console.log('Ошибка обновления записей', e));

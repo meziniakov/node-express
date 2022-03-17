@@ -27,7 +27,6 @@ const rubPrice = {
 };
 
 const columns = [
-  // { field: '_id', headerName: 'ID', width: 200 },
   { field: 'domain', headerName: 'Адрес сайта', minWidth: 150, maxWidth: 350 },
   {
     field: 'title',
@@ -76,19 +75,6 @@ const columns = [
     type: 'number',
   },
   // {
-  //   field: 'actions',
-  //   headerName: 'Действия',
-  //   getActions: params => [
-  //     <GridActionsCellItem label="Delete" />,
-  //     <GridActionsCellItem label="Print" showInMenu />,
-  //   ],
-  // },
-  {
-    field: 'actions',
-    headerName: 'Действия',
-    getActions: params => [<button>Fff</button>],
-  },
-  // {
   //   field: 'fullName',
   //   headerName: 'Full name',
   //   description: 'This column has a value getter and is not sortable.',
@@ -102,8 +88,8 @@ const columns = [
 const DomainGrid = () => {
   const { id } = useParams();
   const [domains, setDomains] = useState([]);
-  const [domainsArray, setDomainsArray] = useState([]);
-  const alert = useAlert(null);
+  const [selectedDomains, setSelectedDomains] = useState([]);
+  // const alert = useAlert(null);
 
   const getDomains = useCallback(() => {
     axios
@@ -126,18 +112,16 @@ const DomainGrid = () => {
     const dom = domains.map(el => {
       return { _id: el._id, domain: el.domain };
     });
-    // console.log('dom', dom);
     const domainsArray = dom.filter(
       el => el._id === rows.find(item => item === el._id)
     );
-    // console.log('domainsArray', domainsArray);
-    setDomainsArray(domainsArray);
+    setSelectedDomains(domainsArray);
   };
 
   const handleSubmit = e => {
     e.preventDefault();
     axios
-      .post('/api/megaindex', domainsArray)
+      .post('/api/megaindex', selectedDomains)
       .then(res => {
         console.log('handleSubmit', res.data);
         getDomains();
@@ -145,18 +129,33 @@ const DomainGrid = () => {
       .catch(e => console.log(e));
   };
 
+  const handleBlackList = e => {
+    e.preventDefault();
+    axios.post('/api/domain/blacklist', selectedDomains).then(res => {
+      console.log('handleBlackList', res.data);
+      getDomains();
+    });
+  };
+
   function CustomToolbar() {
-    return (
-      <GridToolbarContainer>
-        <GridToolbarColumnsButton />
-        <GridToolbarFilterButton />
-        <GridToolbarDensitySelector />
-        <GridToolbarExport />
-        <Button>Спарсить</Button>
-        <Button>В черный список</Button>
-        <Button>Удалить</Button>
-      </GridToolbarContainer>
-    );
+    if (selectedDomains.length) {
+      return (
+        <GridToolbarContainer>
+          <Button onClick={handleSubmit}>Спарсить</Button>
+          <Button onClick={handleBlackList}>В черный список</Button>
+          <Button>Удалить</Button>
+        </GridToolbarContainer>
+      );
+    } else {
+      return (
+        <GridToolbarContainer>
+          <GridToolbarColumnsButton />
+          <GridToolbarFilterButton />
+          <GridToolbarDensitySelector />
+          <GridToolbarExport />
+        </GridToolbarContainer>
+      );
+    }
   }
 
   return (
@@ -165,7 +164,7 @@ const DomainGrid = () => {
         height: '100vh',
         width: 1,
         '& .super-app-theme--Yes': {
-          bgcolor: '#d2d2d2',
+          bgcolor: '#d0f0c0',
           // '&:hover': {
           //   bgcolor: 'red',
           // },
@@ -187,12 +186,9 @@ const DomainGrid = () => {
         checkboxSelection
         onSelectionModelChange={nahdleSelectRow}
         getRowClassName={params =>
-          `super-app-theme--${params.row.traffic == null ? 'Yes' : 'No'}`
+          `super-app-theme--${params.row.traffic == null ? 'No' : 'Yes'}`
         }
       />
-      <button type="submit" onClick={handleSubmit}>
-        Спарсить
-      </button>
     </Box>
   );
 };

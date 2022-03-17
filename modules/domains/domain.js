@@ -57,3 +57,17 @@ export async function updateDomain(req, res) {
     res.status(200).json({ status: 'error', message: 'Ошибка при обновлении' });
   }
 }
+
+export async function domainToBlacklist(req, res) {
+  try {
+    const selectedBlacklist = req.body;
+    await Domain.updateMany(
+      { _id: { $in: selectedBlacklist.map(item => item._id) } },
+      { $set: { blacklist: true } }
+    );
+    res.status(200).json({ status: 'success', message: 'Успешно обновлено' });
+  } catch (e) {
+    console.log(e);
+    res.status(200).json({ status: 'error', message: 'Ошибка при обновлении' });
+  }
+}

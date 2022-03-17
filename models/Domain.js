@@ -16,6 +16,10 @@ const DomainSchema = new Schema({
   description: {
     type: String,
   },
+  blacklist: {
+    type: Boolean,
+    default: false,
+  },
   dateCreate: { type: Date, default: Date.now },
   dateUpdate: { type: Date },
   projects: [{ type: Types.ObjectId, ref: 'Project' }],

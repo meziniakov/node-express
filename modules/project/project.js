@@ -28,10 +28,11 @@ export async function addProject(req, res) {
   }
 }
 
-export async function projectById(req, res) {
+export async function getDomainsByProjectId(req, res) {
   // const project = await Project.findById(req.params.id);
   const idProject = req.params.id;
   const domains = await Domain.find({
+    blacklist: false,
     projects: { $in: [idProject] },
   });
   res.send(domains);
