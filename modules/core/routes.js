@@ -6,12 +6,14 @@ import domainRouter from '../domains/Routes';
 import projectRouter from '../project/Routes';
 import calorieRouter from '../calorie/Routes';
 import parserRouter from '../parser/Routes';
+import emailScrapeRouter from '../email-scrape/Routes';
 import megaindexRouter from '../megaindex/Routes';
 // import { home } from '../../home';
 
 export default function routes(app) {
   app.use('/api/calorie', calorieRouter);
   app.use('/api/parser/', parserRouter);
+  app.use('/api/email-scrape/', emailScrapeRouter);
   app.use('/api/megaindex/', megaindexRouter);
   app.use('/api/user', userRouter);
   app.use('/api/domain', domainRouter);

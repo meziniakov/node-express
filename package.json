@@ -4,7 +4,7 @@
   "description": "",
   "exports": "./server.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node server.js",
+    "start": "NODE_ENV=production node server.js",
     "server": "nodemon --inspect --exec babel-node server.js",
     "client": "npm run start --prefix client",
     "client:install": "npm install --prefix client",
@@ -25,6 +25,7 @@
     "codex-notifier": "^1.1.2",
     "config": "^3.3.7",
     "ejs": "^3.1.6",
+    "email-crawler": "^1.0.4",
     "excel2json": "^1.0.2",
     "express": "^4.17.1",
     "express-validator": "^6.14.0",
