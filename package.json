@@ -4,7 +4,7 @@
   "description": "",
   "exports": "./server.js",
   "scripts": {
-    "start": "NODE_ENV=production node server.js",
+    "start": "NODE_ENV=production babel-node server.js",
     "server": "nodemon --inspect --exec babel-node server.js",
     "client": "npm run start --prefix client",
     "client:install": "npm install --prefix client",
