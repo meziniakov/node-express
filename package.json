@@ -4,7 +4,7 @@
   "description": "",
   "exports": "./src/server.js",
   "scripts": {
-    "start": "npm run build && node build/server.js",
+    "start": "node build/server.js",
     "build": "npm run clean && babel src -d build",
     "server": "nodemon --inspect --exec babel-node ./src/server.js",
     "client": "npm run start --prefix client",
