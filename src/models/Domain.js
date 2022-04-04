@@ -23,6 +23,7 @@ const DomainSchema = new Schema({
   dateCreate: { type: Date, default: Date.now },
   dateUpdate: { type: Date },
   projects: [{ type: Types.ObjectId, ref: 'Project' }],
+  emails: [],
   traffic: Number,
   organic: Number,
   direct: Number,
