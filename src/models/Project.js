@@ -19,6 +19,12 @@ const ProjectSchema = new Schema({
     required: true,
     default: 3,
   },
+  countDomains: {
+    type: Number,
+  },
+  countEmails: {
+    type: Number,
+  },
   profitPerVisitor: {
     type: Number,
     required: true,

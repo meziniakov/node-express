@@ -2,16 +2,43 @@ const Project = require('../../models/Project');
 const Domain = require('../../models/Domain');
 
 export async function allProjects(req, res) {
-  // const { owner } = req.body;
-  // console.log(owner);
-  const projects = await Project.find();
-  res.status(200).send(projects);
-  // if (owner && owner.length !== 0) {
-  //   const projects = await Project.find({ owner: owner });
-  //   res.status(200).send(projects);
-  // } else {
-  //   res.status(200).json({ message: 'Проектов нет' });
-  // }
+  try {
+    const domains = await Domain.find();
+    const projects = await Project.find();
+    //добавляем количество доменов в каждом проекте
+    projects.map(project => {
+      project.countDomains = domains.filter(item =>
+        item.projects.includes(project._id)
+      ).length;
+      project.countEmails = domains
+        .filter(item => item.projects.includes(project._id))
+        .filter(item => item.emails.length > 0).length;
+    });
+    res.status(200).send(projects);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: 'Проекты не найдены или иная ошибка' });
+  }
+}
+
+export async function getProject(req, res) {
+  try {
+    const project = await Project.findById(req.params.id);
+    res.status(200).send(project);
+  } catch (e) {
+    console.log(e);
+    res.status(400).json({ message: 'Проект не найден' });
+  }
+}
+
+export async function updateProject(req, res) {
+  try {
+    await Project.updateOne({ _id: req.params.id }, { $set: req.body });
+    res.status(200).json({ status: 'success', message: 'Успешно обновлено' });
+  } catch (e) {
+    console.log(e);
+    res.status(200).json({ status: 'error', message: 'Ошибка при обновлении' });
+  }
 }
 
 export async function addProject(req, res) {
