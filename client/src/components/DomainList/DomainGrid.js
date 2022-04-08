@@ -11,7 +11,6 @@ import {
 } from '@mui/x-data-grid';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import useAlert from '../../hooks/alert.hook';
 
 const currencyFormatter = new Intl.NumberFormat('ru-RU', {
   style: 'currency',
