@@ -1,0 +1,6 @@
+{
+  "jwtSecret": "Temnikov",
+  "API_URI": "http://18.184.199.33/",
+  "port": 5000,
+  "mongoURI": "mongodb+srv://zifmezin:Hs5CqHEdWXczaEV@cluster0.ifmsp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+}

@@ -2,12 +2,17 @@
   "name": "express_lowdb",
   "version": "1.0.0",
   "description": "",
-  "exports": "src/server.js",
+  "exports": "./src/server.js",
   "scripts": {
     "start": "node build/server.js",
-    "build": "babel src/ -d build",
-    "dev": "nodemon --inspect --ignore 'db.json' --exec babel-node src/server.js",
-    "babel-node": "babel-node --presets='@babel/preset-env'"
+    "build": "npm run clean && babel src -d build",
+    "server": "nodemon --inspect --exec babel-node ./src/server.js",
+    "client": "npm run start --prefix client",
+    "clean": "rm -rf build && mkdir build",
+    "client:install": "npm install --prefix client",
+    "client:build": "npm run build --prefix client",
+    "babel-node": "babel-node --presets='@babel/preset-env'",
+    "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\" "
   },
   "author": "",
   "license": "ISC",
@@ -15,17 +20,29 @@
     "@babel/runtime": "^7.16.7",
     "@babel/runtime-corejs2": "^7.16.7",
     "@material/card": "^13.0.0",
+    "axios": "^0.26.0",
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.1",
+    "cheerio": "^1.0.0-rc.10",
     "codex-notifier": "^1.1.2",
+    "config": "^3.3.7",
     "ejs": "^3.1.6",
+    "email-crawler": "^1.0.4",
     "excel2json": "^1.0.2",
     "express": "^4.17.1",
+    "express-validator": "^6.14.0",
+    "html-email-scraper": "^1.0.12",
+    "i": "^0.3.7",
+    "jsonwebtoken": "^8.5.1",
     "lowdb": "^1.0.0",
     "mongoose": "^6.1.2",
     "morgan": "^1.10.0",
     "node-fetch": "^3.2.0",
+    "npm": "^8.5.2",
+    "puppeteer-core": "^13.4.1",
     "serve-favicon": "^2.5.0",
-    "serve-index": "^1.9.1"
+    "serve-index": "^1.9.1",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.8",
@@ -33,9 +50,12 @@
     "@babel/node": "^7.16.8",
     "@babel/plugin-transform-runtime": "^7.16.10",
     "@babel/preset-env": "^7.16.10",
+    "concurrently": "^7.0.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.7.0",
     "eslint-config-prettier": "^8.3.0",
     "nodemon": "^2.0.15",
-    "prettier": "2.5.1"
+    "prettier": "2.5.1",
+    "puppeteer": "^13.4.1"
   }
 }
